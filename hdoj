@@ -1,0 +1,37 @@
+#include <stdio.h>
+#include <string.h>
+
+int price[1001];
+int dp[1001];
+
+int main()
+{
+    int n,j,max;
+    memset(price,0,sizeof(price));
+    memset(dp,0,sizeof(dp));
+    while (scanf("%d",&n),n)                     //输入n个菜品的价格；
+    {
+        int i;
+        for(i = 1; i <= n; i++)
+        {
+            int max = 0;
+            scanf("%d",price+i);
+            if(price[i] > max)
+                max = price[i];
+                j = i;
+        }
+        price[j] = 0;
+
+        int m;                                   //表示卡上面的余额；
+        scanf("%d",&m);
+        int v;
+        for(i = 1;i <= n; i++)
+            for(v = m-5; v >= price[i]; v--)
+            {
+                if(dp[v] < dp[v-price[i]] + price[i])
+                    dp[v] = dp[v-price[i]] + price[i];
+            }
+        printf("%d\n",m-dp[v]-max);
+    }
+    return 0;
+}
